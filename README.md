@@ -33,15 +33,15 @@ This build is based on the **DVAssetUploader** module skeleton (phpVMS-style pro
 ## Installation (recommended: no SSH)
 
 > **Important:** avoid nested folders. After install, you must have:
-> `modules/AssetUploader/module.json` (not `modules/AssetUploader/AssetUploader/module.json`)
+> `modules/DVAssetUploader/module.json` (not `modules/DVAssetUploader/DVAssetUploader/module.json`)
 
 1. Upload/unzip the module to:
    ```
-   /modules/AssetUploader
+   /modules/DVAssetUploader
    ```
 
 2. Enable the module:
-   - Admin → **Addons → Modules** → Enable **AssetUploader**
+   - Admin → **Addons → Modules** → Enable **DVAssetUploader**
 
 3. Run migrations via phpVMS Updater:
    - Visit: `https://your-site.com/update`
@@ -79,7 +79,7 @@ Some hosts block updater access or caching can interfere. Try:
 
 3) If you have CLI access, you can run ONLY this module’s migration:
 ```bash
-php artisan migrate --path=modules/AssetUploader/Database/migrations --force
+php artisan migrate --path=modules/DVAssetUploader/Database/migrations --force
 ```
 
 ---
@@ -88,7 +88,7 @@ php artisan migrate --path=modules/AssetUploader/Database/migrations --force
 
 Edit:
 ```
-/modules/AssetUploader/Config/config.php
+/modules/DVAssetUploader/Config/config.php
 ```
 
 ### Middleware (important)
@@ -174,18 +174,18 @@ Your middleware is set to `ability:admin`. Change it to:
 ### “Table asset_uploads doesn't exist”
 Run `/update` after enabling the module. If needed (CLI):
 ```bash
-php artisan migrate --path=modules/AssetUploader/Database/migrations --force
+php artisan migrate --path=modules/DVAssetUploader/Database/migrations --force
 ```
 
 ---
 
 ## Development Notes
 
-- Routes: `modules/AssetUploader/Http/Routes/admin.php`
-- Controller: `modules/AssetUploader/Http/Controllers/Admin/AssetUploaderController.php`
-- View: `modules/AssetUploader/Resources/views/admin/index.blade.php`
-- Config: `modules/AssetUploader/Config/config.php`
-- Migration: `modules/AssetUploader/Database/migrations/*create_asset_uploads_table.php`
+- Routes: `modules/DVAssetUploader/Http/Routes/admin.php`
+- Controller: `modules/DVAssetUploader/Http/Controllers/Admin/AssetUploaderController.php`
+- View: `modules/DVAssetUploader/Resources/views/admin/index.blade.php`
+- Config: `modules/DVAssetUploader/Config/config.php`
+- Migration: `modules/DVAssetUploader/Database/migrations/*create_asset_uploads_table.php`
 
 ---
 
