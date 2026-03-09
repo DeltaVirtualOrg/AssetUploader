@@ -1,4 +1,4 @@
-# AssetUploader (phpVMS v7)
+# DVAssetUploader (phpVMS v7)
 
 Admin-only module for **phpVMS v7** that lets staff upload files into **pre-approved (whitelisted) folders** on your server (ex: SPTheme banners, awards, tours, events, downloads). Each destination (“target”) can enforce its own file types, max size, and helper rules.
 
