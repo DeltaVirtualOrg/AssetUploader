@@ -1,5 +1,17 @@
 # DVAssetUpdater (phpVMS v7)
 
+## Changelog
+
+### 2026-03-15
+- Fixed upload filename handling so files no longer receive unwanted timestamp/random suffixes unless a real filename conflict exists
+- Updated `AssetUploaderController.php` to preserve original/custom filenames more reliably
+- Improved collision handling for both unique and non-unique naming modes
+- Cleaned up leftover legacy `AssetUploader` references and standardized naming under `DVAssetUpdater`
+- Reworked the admin upload page with a cleaner, more modern, and more readable interface
+- Fixed blank target metadata fields by replacing the old script approach with a more reliable inline JSON-driven implementation
+- Improved recent uploads display with better file details and easier scanning
+- Increased readability across the admin page with larger text, stronger contrast, and better spacing
+
 Admin-only module that uploads files into *whitelisted* destinations (targets), like:
 - `/public/SPTheme/images/banner`
 - `/public/SPTheme/images/awards`
