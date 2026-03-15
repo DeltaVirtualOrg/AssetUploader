@@ -4,8 +4,8 @@
   "description": "DV Asset Uploader module for phpVMS v7",
   "authors": [
     {
-      "name": "",
-      "email": ""
+      "name": "Steven Parker",
+      "email": "steven.stevenparker2@gmail.com"
     }
   ],
   "require": {
