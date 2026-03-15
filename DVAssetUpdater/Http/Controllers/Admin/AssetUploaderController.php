@@ -91,18 +91,26 @@ class AssetUploaderController extends Controller
             $baseName = 'upload';
         }
 
-        $naming = $target['naming'] ?? 'unique'; // original|unique
+        $naming = $target['naming'] ?? 'original'; // original|unique
         $overwrite = (bool) ($request->boolean('overwrite') && (bool) ($target['overwrite'] ?? false));
 
         $stored = $baseName.'.'.$ext;
+        $candidatePath = $destReal.DIRECTORY_SEPARATOR.$stored;
 
-        if ($naming === 'unique' || (!$overwrite && File::exists($destReal.DIRECTORY_SEPARATOR.$stored))) {
-            $stored = $baseName.'-'.now()->format('Ymd-His').'-'.Str::lower(Str::random(6)).'.'.$ext;
-        }
-
-        if (!$overwrite && File::exists($destReal.DIRECTORY_SEPARATOR.$stored)) {
-            // extremely unlikely collision, but handle it
-            $stored = $baseName.'-'.now()->format('Ymd-His').'-'.Str::lower(Str::random(10)).'.'.$ext;
+        if (!$overwrite && File::exists($candidatePath)) {
+            if ($naming === 'unique') {
+                do {
+                    $stored = $baseName.'-'.now()->format('Ymd-His').'-'.Str::lower(Str::random(6)).'.'.$ext;
+                    $candidatePath = $destReal.DIRECTORY_SEPARATOR.$stored;
+                } while (File::exists($candidatePath));
+            } else {
+                $counter = 1;
+                do {
+                    $stored = $baseName.'-'.$counter.'.'.$ext;
+                    $candidatePath = $destReal.DIRECTORY_SEPARATOR.$stored;
+                    $counter++;
+                } while (File::exists($candidatePath));
+            }
         }
 
         try {
@@ -115,15 +123,15 @@ class AssetUploaderController extends Controller
 
         if (Schema::hasTable((new AssetUpload())->getTable())) {
             $upload = new AssetUpload();
-        $upload->user_id = Auth::id();
-        $upload->target_key = $targetKey;
-        $upload->original_name = $originalName;
-        $upload->stored_name = $stored;
-        $upload->relative_path = $relativeSaved;
-        $upload->mime = $file->getClientMimeType() ?: null;
-        $upload->size = (int) File::size($destReal.DIRECTORY_SEPARATOR.$stored);
-        $upload->sha1 = sha1_file($destReal.DIRECTORY_SEPARATOR.$stored) ?: null;
-        $upload->save();
+            $upload->user_id = Auth::id();
+            $upload->target_key = $targetKey;
+            $upload->original_name = $originalName;
+            $upload->stored_name = $stored;
+            $upload->relative_path = $relativeSaved;
+            $upload->mime = $file->getClientMimeType() ?: null;
+            $upload->size = (int) File::size($destReal.DIRECTORY_SEPARATOR.$stored);
+            $upload->sha1 = sha1_file($destReal.DIRECTORY_SEPARATOR.$stored) ?: null;
+            $upload->save();
         }
 
         return redirect()->route('admin.assetuploader.index')
